@@ -98,11 +98,11 @@ message_list = []
 initial_message = {
     "role": "user",
     # "content": [{"text": "What is the cosine of 7?"}],
-    "content": [{"text": "Calculate the following addition: 1+2+3+4+5+6+7+8+9+10"}],
+    "content": [{"text": "次の足し算を計算して: 1+2+3+4+5+6+7+8+9+10"}],
 }
 
 message_list.append(initial_message)
-print(json.dumps(message_list, indent=4))
+print(json.dumps(message_list, indent=4, ensure_ascii=False))
 
 response = bedrock.converse(
     modelId="apac.anthropic.claude-3-5-sonnet-20241022-v2:0",
@@ -113,7 +113,7 @@ response = bedrock.converse(
 )
 
 response_message = response["output"]["message"]
-print(json.dumps(response_message, indent=4))
+print(json.dumps(response_message, indent=4, ensure_ascii=False))
 message_list.append(response_message)
 
 response_content_blocks = response_message["content"]
