@@ -1,3 +1,5 @@
+# https://community.aws/content/2hW5367isgQOkkXLYjp4JB3Pe16/intro-to-tool-use-with-the-amazon-bedrock-converse-api
+
 import boto3
 import json
 import math

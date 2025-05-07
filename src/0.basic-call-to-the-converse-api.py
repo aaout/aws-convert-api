@@ -1,3 +1,5 @@
+# https://community.aws/content/2hHgVE7Lz6Jj1vFv39zSzzlCilG/getting-started-with-the-amazon-bedrock-converse-api
+
 import boto3
 import json
 
