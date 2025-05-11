@@ -2,24 +2,37 @@
 
 import boto3
 import json
+from pydantic import BaseModel
+
+
+class ContentItem(BaseModel):
+    text: str
+
+
+class Message(BaseModel):
+    role: str
+    content: list[ContentItem]
+
 
 session = boto3.Session()
-bedrock = session.client(service_name="bedrock-runtime", region_name="ap-northeast-3")
+bedrock = session.client(service_name="bedrock-runtime", region_name="ap-northeast-1")
 
 message_list = []
 
 initial_message = {
     "role": "user",
-    "content": [{"text": "How are you today?"}],
+    "content": [{"text": "元気ですか?"}],
 }
 
-message_list.append(initial_message)
+parsed_message = Message(**initial_message).model_dump()
+print(json.dumps(parsed_message, indent=4, ensure_ascii=False))
+
+message_list.append(parsed_message)
 
 response = bedrock.converse(
-    modelId="apac.anthropic.claude-3-5-sonnet-20241022-v2:0",
+    modelId="anthropic.claude-3-5-sonnet-20240620-v1:0",
     messages=message_list,
     inferenceConfig={"maxTokens": 2000, "temperature": 0},
-)
-
-response_message = response["output"]["message"]
-print(json.dumps(response_message, indent=4))
+)["output"]["message"]
+parsed_response = Message(**response).model_dump()
+print(json.dumps(parsed_response, indent=4, ensure_ascii=False))
